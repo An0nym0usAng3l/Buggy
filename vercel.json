@@ -3,14 +3,14 @@
     "name": "Buggy",
     "builds": [
         {
-            "src": "index.js",
+            "src": "src/index.js",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/index.js"
+            "dest": "src/index.js"
         }
     ]
 }
