@@ -4,7 +4,7 @@ const axios = require("axios")
 class Whatsapp {
     static async send_text(phone, text) {
         try {
-            axios({
+            await axios({
                 method: "POST",
                 url: "https://graph.facebook.com/v15.0/101516122859859/messages",
                 data:
@@ -33,7 +33,7 @@ class Whatsapp {
 
     static async send_image(phone, url, caption) {
         try {
-            axios({
+            await axios({
                 method: "POST",
                 url: "https://graph.facebook.com/v15.0/101516122859859/messages",
                 data:
