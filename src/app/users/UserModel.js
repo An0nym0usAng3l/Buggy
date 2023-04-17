@@ -10,23 +10,26 @@ const userSchema = new mongoose.Schema(
         },
         level: {
             type: String,
+            required: true,
             default: "0",
         },
         trials: {
             chat_gpt: {
+                required: true,
                 type: Number,
                 default: 3
             },
             image_gen: {
+                required: true,
                 type: Number,
                 default: 3
             }
-        },
-        created_at: {
-            type: Date,
-            default: Date.now
         }
     },
+    {
+        collection: 'Users',
+        timestamps: true
+    }
 );
 
 module.exports = mongoose.model("User", userSchema);

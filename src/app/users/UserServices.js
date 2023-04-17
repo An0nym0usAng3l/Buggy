@@ -1,33 +1,31 @@
-const ErrorHandler = require("../../interfaces/errors");
 const User = require("./UserModel")
+const ConflictError = require("../../interfaces/errors/ConflictError");
+const ResourceNotFoundError = require("../../interfaces/errors/ResourceNotFoundError");
 
 const getOne = async (payload) => {
     const { phone } = payload;
-    const user = await User.find({ phone }, "phone").exec();
+    const user = await User.findOne({ phone }).exec();
     if (!user) {
-        throw ErrorHandler.notFound();
+        throw new ResourceNotFoundError("User does not exist");
     }
     return user
 }
 
 const create = async (payload) => {
     const { phone } = payload;
-    const existingUser = await User.find({ phone }, "phone").exec();
-    if (existingUser) {
-        return ErrorHandler.conflictError();
+    const existingUser = await User.find({ phone }).exec();
+    if (existingUser && existingUser.length > 0) {
+        throw new ConflictError("User already exists");
     }
-    const newUser = await this.createDoc({
-        ...payload,
-        created_by: this.currentUser._id,
-    });
+    const newUser = await User.create({ phone });
     return newUser
 }
 
 const update = async (payload) => {
     const { phone } = payload;
     const existingUser = await User.find({ phone }, "phone").exec();
-    if (!existingUser) {
-        throw ErrorHandler.notFound();
+    if (!existingUser && existingUser.length === 0) {
+        throw new ResourceNotFoundError("User does not exist");
     }
     const newUser = await User.findOneAndUpdate(
         { phone },
@@ -38,21 +36,29 @@ const update = async (payload) => {
 }
 
 const update_level = async (phone, level) => {
-    const existingUser = await User.find({ phone }, "phone").exec();
-    if (!existingUser) {
-        throw ErrorHandler.notFound();
+    const existingUser = await User.find({ phone }).exec();
+    if (!existingUser && existingUser.length === 0) {
+        throw new ResourceNotFoundError("User does not exist");
     }
     await User.findOneAndUpdate(
         { phone },
-        { $set: { level: new_level } },
+        { $set: { level } },
         { new: true }
     );
     return
 }
 
-const update_trials = async (phone, level) => {
-
-    return
+const update_trials = async (phone, trials) => {
+    const existingUser = await User.find({ phone }).exec();
+    if (!existingUser && existingUser.length === 0) {
+        throw new ResourceNotFoundError("User does not exist");
+    }
+    let user = await User.findOneAndUpdate(
+        { phone },
+        { $set: { trials } },
+        { new: true }
+    );
+    return user
 }
 
 module.exports = {

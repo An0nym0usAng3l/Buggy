@@ -1,13 +1,13 @@
 const welcome_text = (user) => `Hello there! Welcome to Buggy, your personal WhatsApp bot. Here are the available commands you can use:
 
-1. Chat with AI (you have ${user.trials.chat_gpt} tries left)
-2. Generate Image (you have ${user.trials.image_gen} tries left)
-3. Check Network Speed
+1. Chat with AI (you have ${user.trials.chat_gpt} attempt(s) left)
+2. Generate Image (you have ${user.trials.image_gen} attempt(s) left)
+3. Check Network Speed[FREE]
 Please type the number corresponding to the command you want to use, or type '00' to see this list again.
 `
 
 const chat_with_ai = (user) => `
-You have ${user.trials.chat_gpt} attempts left to chat with AI. Please type in your message to start the conversation. You can type '00' at any time to cancel the conversation and return to the main menu.
+You have ${user.trials.chat_gpt} attempt(s) left to chat with AI. Please type in your message to start the conversation. You can type '00' at any time to cancel the conversation and return to the main menu.
 `
 
 const exhausted = (option) => `
@@ -15,17 +15,26 @@ Sorry, you have no more attempts left to ${option}. Please enter '00' to go back
 `
 
 const generate_image = (user) => `
-You have ${user.trials.chat_gpt} attempts left to generate an image. Please enter a brief description of the image you want to generate. You can type '00' at any time to cancel the conversation and return to the main menu.
+You have ${user.trials.image_gen} attempt(s) left to generate an image. Please enter a brief description of the image you want to generate. You can type '00' at any time to cancel the conversation and return to the main menu.
 `
 
 const invalid = `
-Sorry, I didn't understand your response. Please enter a valid option or command from the list provided.
+Sorry, I didn't understand your response. Please enter a valid option or command from the list provided, or type '00' to see the list again.
 `
 
-const ai_reply = (response, user) => `
-*${response}*
+const ai_reply = (response, user) => `*${response}*
 
-_You have ${user.trials.chat_gpt} attempts left to chat with AI._
+_You have ${user.trials.chat_gpt} attempt(s) left to chat with AI._
+`
+
+const image_caption = (text, user) => `Here is
+*${text}*
+
+_You have ${user.trials.image_gen} attempt(s) left to generate image._
+`
+
+const speed_reply = (speed) => `
+Your network speed is *${speed.toFixed(2)}* megabits per second.
 `
 
 module.exports = {
@@ -34,5 +43,7 @@ module.exports = {
     exhausted,
     generate_image,
     invalid,
-    ai_reply
+    ai_reply,
+    image_caption,
+    speed_reply
 }

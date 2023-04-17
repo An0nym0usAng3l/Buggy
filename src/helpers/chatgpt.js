@@ -14,6 +14,15 @@ class ChatGPT {
         });
         return (response.data.choices[0].text);
     }
+
+    static async generate_image(prompt) {
+        const response = await openai.createImage({
+            prompt: prompt,
+            n: 1,
+            size: "1024x1024",
+        });
+        return response.data.data[0].url;
+    }
 }
 
 module.exports = ChatGPT
