@@ -47,8 +47,8 @@ const sort_webhook = async (req, res) => {
     if (!user || user.length === 0) {
         user = await create({ phone })
     }
-    // Go back if text is 00
-    if (text === "00") {
+    // Go back if text is 0
+    if (text === "0") {
         await update_level(phone, "0")
         await WhatsApp.send_text(phone, welcome_text(user))
         return ResponseManager.getResponseHandler(res).onSuccess("", "Back to main menu")
@@ -96,7 +96,6 @@ const sort_webhook = async (req, res) => {
     }
 
     let current_level = initial_level !== "0" ? `${initial_level}*${text}` : text
-    console.log("Hi", current_level, initial_level, text)
     // Reply based on current level
     switch (String(current_level)) {
         case "1":
