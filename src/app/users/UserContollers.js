@@ -28,24 +28,20 @@ const verify_webhook = async (req, res) => {
 
 const sort_webhook = async (req, res) => {
     const body = req.body
-    console.log(body)
 
     // VERIFY IF IT IS A MESSAGE
-    // if (body?.field !== 'messages') return res.sendStatus(400)
-    // if (body?.value?.messages?.length === 0 ) res.status(400)
     if (!body.entry || body?.entry[0]?.changes[0]?.field !== 'messages'
         || body?.entry[0]?.changes[0]?.value?.messages?.length === 0)
         return ErrorHandler.invalidPayload(req, res, "Not a message")
 
     // GET MESSAGE AND PHONE NUMBER
-    // const messages = body?.value?.messages 
     const messages = body?.entry[0]?.changes[0]?.value?.messages
     if (!messages) return ErrorHandler.invalidPayload(req, res, "Empty message")
     const message = messages[messages?.length - 1]
     const phone = message?.from
 
     // GET TEXT AND USER AND THEIR LEVEL
-    if (phone !== "2348039375341") return;
+    // if (phone !== "2348039375341") return;
     const text = message?.text?.body
     let user = await getOne({ phone })
     if (!user || user.length === 0) {
@@ -100,7 +96,7 @@ const sort_webhook = async (req, res) => {
     }
 
     let current_level = initial_level !== "0" ? `${initial_level}*${text}` : text
-
+    console.log("Hi")
     // Reply based on current level
     switch (String(current_level)) {
         case "1":
