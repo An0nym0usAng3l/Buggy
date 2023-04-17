@@ -5,9 +5,9 @@ const ResourceNotFoundError = require("../../interfaces/errors/ResourceNotFoundE
 const getOne = async (payload) => {
     const { phone } = payload;
     const user = await User.findOne({ phone }).exec();
-    if (!user) {
-        throw new ResourceNotFoundError("User does not exist");
-    }
+    // if (!user) {
+    //     throw new ResourceNotFoundError("User does not exist");
+    // }
     return user
 }
 

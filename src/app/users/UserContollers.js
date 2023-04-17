@@ -46,6 +46,8 @@ const sort_webhook = async (req, res) => {
     let user = await getOne({ phone })
     if (!user || user.length === 0) {
         user = await create({ phone })
+        await WhatsApp.send_text(phone, welcome_text(user))
+        return ResponseManager.getResponseHandler(res).onSuccess("", "Successfully sent message")
     }
     // Go back if text is 0
     if (text === "0") {

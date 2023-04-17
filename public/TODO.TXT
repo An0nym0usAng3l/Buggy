@@ -1,1 +1,11 @@
 Buggy, the genius chatbot, is here to assist you with a variety of tasks! Whether you want to chat with AI, generate images, or check your network speed, Buggy has got you covered. But that's not all - Buggy is constantly evolving and adding new features to help make your life easier. Get ready to experience the magic of Buggy and see what this genius clown can do for you!"
+
+"Buggy: The Genius WhatsApp Bot"
+"Experience the Magic of Buggy: Your Personal WhatsApp Assistant"
+"Buggy: The Fun and Functional WhatsApp Chatbot"
+"From Chatting to Image Generation: Buggy Does it All"
+"Unleash the Power of Buggy: Your All-in-One WhatsApp Solution"
+
+Buggy is a WhatsApp bot that generates images, checks network speed and chats with users using OpenAI GPT-3 language model.
+
+Buggy is a WhatsApp chatbot that provides users with an interactive and engaging experience. Users can chat with ChatGPT AI to get answers to their questions, generate random images, and check their network speed by simply entering the corresponding numbers as options. It's designed to be user-friendly, with a simple menu interface that makes it easy for users to navigate and get the information they need. The name Buggy was inspired by the One Piece character "Senryo Doke no Buggy," which means "Buggy, the genius clown." The chatbot is constantly improving, with new features being added regularly to make the user experience even better. Buggy is a great tool for users who want to interact with AI in a fun and easy way while getting valuable information.
