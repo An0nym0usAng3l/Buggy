@@ -24,6 +24,7 @@ class Whatsapp {
                     "Content-Type": "application/json"
                 },
             })
+            console.log("sent reply")
             return true
         } catch (e) {
             return false

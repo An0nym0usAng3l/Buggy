@@ -96,7 +96,7 @@ const sort_webhook = async (req, res) => {
     }
 
     let current_level = initial_level !== "0" ? `${initial_level}*${text}` : text
-    console.log("Hi")
+    console.log("Hi", current_level, initial_level, text)
     // Reply based on current level
     switch (String(current_level)) {
         case "1":
