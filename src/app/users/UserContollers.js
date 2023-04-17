@@ -28,6 +28,8 @@ const verify_webhook = async (req, res) => {
 
 const sort_webhook = async (req, res) => {
     const body = req.body
+    console.log(body)
+
     // VERIFY IF IT IS A MESSAGE
     // if (body?.field !== 'messages') return res.sendStatus(400)
     // if (body?.value?.messages?.length === 0 ) res.status(400)
