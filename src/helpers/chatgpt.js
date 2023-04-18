@@ -1,4 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
+require("dotenv").config()
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
 });
@@ -8,7 +9,11 @@ class ChatGPT {
     static async generate_response(question) {
         const response = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: question,
+            prompt: `
+            ${question}
+
+            ${process.env.EXTRA_COMMAND}
+            `,
             temperature: 0.7,
             max_tokens: 100,
         });

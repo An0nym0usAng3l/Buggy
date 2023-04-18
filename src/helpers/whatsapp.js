@@ -6,7 +6,7 @@ class Whatsapp {
         try {
             await axios({
                 method: "POST",
-                url: "https://graph.facebook.com/v15.0/101516122859859/messages",
+                url: "https://graph.facebook.com/v15.0/114500484951780/messages",
                 data:
                 {
                     "messaging_product": "whatsapp",
@@ -34,7 +34,7 @@ class Whatsapp {
         try {
             await axios({
                 method: "POST",
-                url: "https://graph.facebook.com/v15.0/101516122859859/messages",
+                url: "https://graph.facebook.com/v15.0/114500484951780/messages",
                 data:
                 {
                     "messaging_product": "whatsapp",
