@@ -24,3 +24,7 @@ yarn.lock
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/public/Buggy presentation.mp4
+
+/src/TODO.TXT
