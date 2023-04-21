@@ -43,6 +43,8 @@ ${"```Error, error, error! Looks like the jokes on us this time```"}
 
 *Details:*
 ${"```"}${message}${"```"}
+
+Enter '0' to go back to the main menu.
 `
 
 module.exports = {
