@@ -39,8 +39,10 @@ Your network speed is *${speed.toFixed(2)}* megabits per second.
 `
 
 const error_reply = (message) => `
-*ERROR*
-${message}
+${"```Error, error, error! Looks like the jokes on us this time```"}
+
+*Details:*
+${"```"}${message}${"```"}
 `
 
 module.exports = {
