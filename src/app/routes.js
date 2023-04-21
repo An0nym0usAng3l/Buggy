@@ -1,9 +1,3 @@
-/* eslint-disable import/no-dynamic-require */
-/* eslint-disable global-require */
-/**
- * Automatically loads all models and exports them
- */
-
 const fs = require("fs");
 const path = require("path");
 const { Router } = require("express");

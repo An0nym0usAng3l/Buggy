@@ -26,7 +26,7 @@ class Whatsapp {
             })
             return true
         } catch (e) {
-            return false
+            console.log(e)
         }
     }
 
@@ -54,7 +54,7 @@ class Whatsapp {
             })
             return true
         } catch (e) {
-            return false
+            console.log(e)
         }
     }
 }

@@ -12,7 +12,8 @@ const {
     exhausted,
     ai_reply,
     image_caption,
-    speed_reply
+    speed_reply,
+    error_reply
 } = require("../../helpers/messages")
 
 const verify_webhook = async (req, res) => {
@@ -41,7 +42,6 @@ const sort_webhook = async (req, res) => {
     const phone = message?.from
 
     // GET TEXT AND USER AND THEIR LEVEL
-    // if (phone !== "2348039375341") return;
     const text = message?.text?.body
     let user = await getOne({ phone })
     if (!user || user.length === 0) {
@@ -59,19 +59,20 @@ const sort_webhook = async (req, res) => {
 
     // Reply based on initital level
     switch (initial_level) {
-        // case "0":
-        //     await WhatsApp.send_text(phone, welcome_text(user))
-        //     return ResponseManager.getResponseHandler(res).onSuccess("", "Successfully sent message")
         case "1":
             //ChatGPT
             if (user.trials.chat_gpt > 0) {
                 let response = await ChatGPT.generate_response(text);
-                let trials = {
-                    ...user.trials,
-                    chat_gpt: user.trials.chat_gpt - 1,
+                if (await response?.failed) {
+                    await WhatsApp.send_text(phone, error_reply(response?.message, user))
+                } else {
+                    let trials = {
+                        ...user.trials,
+                        chat_gpt: user.trials.chat_gpt - 1,
+                    }
+                    let newuser = await update_trials(phone, trials)
+                    await WhatsApp.send_text(phone, ai_reply(response, newuser))
                 }
-                let newuser = await update_trials(phone, trials)
-                await WhatsApp.send_text(phone, ai_reply(response, newuser))
             }
             else {
                 await WhatsApp.send_text(phone, exhausted("chat with AI"))
@@ -81,12 +82,16 @@ const sort_webhook = async (req, res) => {
             // Generate Image
             if (user.trials.image_gen > 0) {
                 let url = await ChatGPT.generate_image(text);
-                let trials = {
-                    ...user.trials,
-                    image_gen: user.trials.image_gen - 1,
+                if (await url?.failed) {
+                    await WhatsApp.send_text(phone, error_reply(url?.message))
+                } else {
+                    let trials = {
+                        ...user.trials,
+                        image_gen: user.trials.image_gen - 1,
+                    }
+                    let newuser = await update_trials(phone, trials)
+                    await WhatsApp.send_image(phone, url, String(image_caption(text, newuser)))
                 }
-                let newuser = await update_trials(phone, trials)
-                await WhatsApp.send_image(phone, url, String(image_caption(text, newuser)))
             }
             else {
                 await WhatsApp.send_text(phone, exhausted("image generation"))
@@ -119,7 +124,11 @@ const sort_webhook = async (req, res) => {
             return ResponseManager.getResponseHandler(res).onSuccess("", "Successfully sent message")
         case "3":
             let speed = await Fast.check_speed()
-            await WhatsApp.send_text(phone, speed_reply(speed))
+            if (await speed?.failed) {
+                await WhatsApp.send_text(phone, error_reply(speed?.message, user))
+            } else {
+                await WhatsApp.send_text(phone, speed_reply(speed))
+            }
             return ResponseManager.getResponseHandler(res).onSuccess("", "Successfully sent message")
 
         default:

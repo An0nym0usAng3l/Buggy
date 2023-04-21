@@ -38,6 +38,11 @@ const speed_reply = (speed) => `
 Your network speed is *${speed.toFixed(2)}* megabits per second.
 `
 
+const error_reply = (message) => `
+*ERROR*
+${message}
+`
+
 module.exports = {
     welcome_text,
     chat_with_ai,
@@ -46,5 +51,6 @@ module.exports = {
     invalid,
     ai_reply,
     image_caption,
-    speed_reply
+    speed_reply,
+    error_reply
 }

@@ -3,7 +3,6 @@ const express = require('express');
 require("dotenv").config()
 
 
-const app = express();
 const xhub = require('express-x-hub');
 const port = process.env.PORT || 2020
 
