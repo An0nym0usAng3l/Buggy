@@ -8,10 +8,10 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             unique: [true, "A user with this phone number already exists"],
         },
-        name: {
-            type: String,
-            // required: true,
-        },
+        // name: {
+        //     type: String,
+        //     // required: true,
+        // },
         level: {
             type: String,
             required: true,

@@ -17,7 +17,7 @@ const create = async (payload) => {
     if (existingUser && existingUser.length > 0) {
         throw new ConflictError("User already exists");
     }
-    const newUser = await User.create({ phone, name });
+    const newUser = await User.create({ phone });
     return newUser
 }
 
