@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
             image_gen: {
                 required: true,
                 type: Number,
-                default: 3
+                default: 1
             }
         }
     },

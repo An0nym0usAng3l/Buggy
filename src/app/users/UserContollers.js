@@ -4,6 +4,8 @@ const { getOne, update_level, create, update_trials } = require("./UserServices"
 const ChatGPT = require("../../helpers/chatgpt")
 const WhatsApp = require("../../helpers/whatsapp")
 const Fast = require("../../helpers/fast")
+const StabilityAI = require("../../helpers/stability")
+const Cloudinary = require("../../helpers/cloudinary")
 const {
     welcome_text,
     chat_with_ai,
@@ -81,7 +83,9 @@ const sort_webhook = async (req, res) => {
         case "2":
             // Generate Image
             if (user.trials.image_gen > 0) {
-                let url = await ChatGPT.generate_image(text);
+                // let url = await ChatGPT.generate_image(text); // Depreciated
+                let base64 = await StabilityAI.generate_image(text)
+                let url = (await Cloudinary.upload_with_base64(base64))
                 if (await url?.failed) {
                     await WhatsApp.send_text(phone, error_reply(url?.message))
                 } else {
