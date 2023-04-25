@@ -37,7 +37,10 @@ class ChatGPT {
     static async generate_image(prompt) {
         try {
             const response = await openai.createImage({
-                prompt: prompt,
+                prompt: `${prompt}
+                            
+                In English!!
+                `,
                 n: 1,
                 size: "1024x1024",
             });

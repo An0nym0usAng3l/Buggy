@@ -12,7 +12,7 @@ class Cloudinary {
         } catch (e) {
             return ({
                 failed: true,
-                message: e.message
+                message: e?.message
             })
         }
     }

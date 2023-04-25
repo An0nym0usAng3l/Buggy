@@ -83,9 +83,13 @@ const sort_webhook = async (req, res) => {
         case "2":
             // Generate Image
             if (user.trials.image_gen > 0) {
-                // let url = await ChatGPT.generate_image(text); // Depreciated
-                let base64 = await StabilityAI.generate_image(text)
-                let url = (await Cloudinary.upload_with_base64(base64))
+
+                // GENERATING WITH STABILITY AI
+                // let base64 = await StabilityAI.generate_image(text)
+                // let url = (await Cloudinary.upload_with_base64(base64))
+
+                // GENERATING WITH DALL E
+                let url = await ChatGPT.generate_image(text);
                 if (await url?.failed) {
                     await WhatsApp.send_text(phone, error_reply(url?.message))
                 } else {
