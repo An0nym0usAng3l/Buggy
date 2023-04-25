@@ -12,12 +12,12 @@ const getOne = async (payload) => {
 }
 
 const create = async (payload) => {
-    const { phone } = payload;
+    const { phone, name } = payload;
     const existingUser = await User.find({ phone }).exec();
     if (existingUser && existingUser.length > 0) {
         throw new ConflictError("User already exists");
     }
-    const newUser = await User.create({ phone });
+    const newUser = await User.create({ phone, name });
     return newUser
 }
 
@@ -61,6 +61,19 @@ const update_trials = async (phone, trials) => {
     return user
 }
 
+const update_name = async (phone, name) => {
+    const existingUser = await User.find({ phone }).exec();
+    if (!existingUser && existingUser.length === 0) {
+        throw new ResourceNotFoundError("User does not exist");
+    }
+    let user = await User.findOneAndUpdate(
+        { phone },
+        { $set: { name } },
+        { new: true, upsert: true }
+    );
+    return user
+}
+
 module.exports = {
-    create, update, update_level, update_trials, getOne
+    create, update, update_level, update_trials, getOne, update_name
 }

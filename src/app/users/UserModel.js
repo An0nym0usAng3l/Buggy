@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             unique: [true, "A user with this phone number already exists"],
         },
+        name: {
+            type: String,
+            // required: true,
+        },
         level: {
             type: String,
             required: true,
@@ -17,12 +21,12 @@ const userSchema = new mongoose.Schema(
             chat_gpt: {
                 required: true,
                 type: Number,
-                default: 3
+                default: 5
             },
             image_gen: {
                 required: true,
                 type: Number,
-                default: 1
+                default: 3 // 1 if its stability
             }
         }
     },

@@ -1,6 +1,6 @@
 const ErrorHandler = require("../../interfaces/errors");
 const ResponseManager = require("../../interfaces/response")
-const { getOne, update_level, create, update_trials } = require("./UserServices")
+const { getOne, update_level, create, update_trials, update_name } = require("./UserServices")
 const ChatGPT = require("../../helpers/chatgpt")
 const WhatsApp = require("../../helpers/whatsapp")
 const Fast = require("../../helpers/fast")
@@ -37,8 +37,9 @@ const sort_webhook = async (req, res) => {
         || body?.entry[0]?.changes[0]?.value?.messages?.length === 0)
         return ErrorHandler.invalidPayload(req, res, "Not a message")
 
-    // GET MESSAGE AND PHONE NUMBER
+    // GET MESSAGE, NAME AND PHONE NUMBER
     const messages = body?.entry[0]?.changes[0]?.value?.messages
+    const name = body?.entry[0]?.changes[0]?.value?.contacts[0]?.profile?.name;
     if (!messages) return ErrorHandler.invalidPayload(req, res, "Empty message")
     const message = messages[messages?.length - 1]
     const phone = message?.from
@@ -47,9 +48,12 @@ const sort_webhook = async (req, res) => {
     const text = message?.text?.body
     let user = await getOne({ phone })
     if (!user || user.length === 0) {
-        user = await create({ phone })
+        user = await create({ phone, name })
         await WhatsApp.send_text(phone, welcome_text(user))
         return ResponseManager.getResponseHandler(res).onSuccess("", "Successfully sent message")
+    } else if (!user?.name || user?.name !== name) {
+        let user_name = name ? name : phone
+        await update_name(phone, user_name)
     }
     // Go back if text is 0
     if (text === "0") {
